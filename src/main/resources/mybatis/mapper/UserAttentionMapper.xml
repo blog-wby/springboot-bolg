@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.UserAttentionMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.UserAttention" >
+    <id column="a_id" property="aId" jdbcType="SMALLINT" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="attention_id" property="attentionId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a_id, user_id, attention_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_attention
+    where a_id = #{aId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from user_attention
+    where a_id = #{aId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.UserAttention" >
+    insert into user_attention (a_id, user_id, attention_id
+      )
+    values (#{aId,jdbcType=SMALLINT}, #{userId,jdbcType=INTEGER}, #{attentionId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.UserAttention" >
+    insert into user_attention
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        a_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="attentionId != null" >
+        attention_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        #{aId,jdbcType=SMALLINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="attentionId != null" >
+        #{attentionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.UserAttention" >
+    update user_attention
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="attentionId != null" >
+        attention_id = #{attentionId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.UserAttention" >
+    update user_attention
+    set user_id = #{userId,jdbcType=INTEGER},
+      attention_id = #{attentionId,jdbcType=INTEGER}
+    where a_id = #{aId,jdbcType=SMALLINT}
+  </update>
+</mapper>

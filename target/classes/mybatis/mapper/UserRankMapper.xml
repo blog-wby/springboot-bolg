@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.UserRankMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.UserRank" >
+    <id column="rank_id" property="rankId" jdbcType="INTEGER" />
+    <result column="user_rank_id" property="userRankId" jdbcType="SMALLINT" />
+    <result column="rank_mark" property="rankMark" jdbcType="INTEGER" />
+    <result column="rank_name" property="rankName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rank_id, user_rank_id, rank_mark, rank_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_rank
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_rank
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.UserRank" >
+    insert into user_rank (rank_id, user_rank_id, rank_mark, 
+      rank_name)
+    values (#{rankId,jdbcType=INTEGER}, #{userRankId,jdbcType=SMALLINT}, #{rankMark,jdbcType=INTEGER}, 
+      #{rankName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.UserRank" >
+    insert into user_rank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rankId != null" >
+        rank_id,
+      </if>
+      <if test="userRankId != null" >
+        user_rank_id,
+      </if>
+      <if test="rankMark != null" >
+        rank_mark,
+      </if>
+      <if test="rankName != null" >
+        rank_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rankId != null" >
+        #{rankId,jdbcType=INTEGER},
+      </if>
+      <if test="userRankId != null" >
+        #{userRankId,jdbcType=SMALLINT},
+      </if>
+      <if test="rankMark != null" >
+        #{rankMark,jdbcType=INTEGER},
+      </if>
+      <if test="rankName != null" >
+        #{rankName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.UserRank" >
+    update user_rank
+    <set >
+      <if test="userRankId != null" >
+        user_rank_id = #{userRankId,jdbcType=SMALLINT},
+      </if>
+      <if test="rankMark != null" >
+        rank_mark = #{rankMark,jdbcType=INTEGER},
+      </if>
+      <if test="rankName != null" >
+        rank_name = #{rankName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.UserRank" >
+    update user_rank
+    set user_rank_id = #{userRankId,jdbcType=SMALLINT},
+      rank_mark = #{rankMark,jdbcType=INTEGER},
+      rank_name = #{rankName,jdbcType=VARCHAR}
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </update>
+</mapper>

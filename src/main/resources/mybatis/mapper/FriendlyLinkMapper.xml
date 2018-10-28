@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.FriendlyLinkMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.FriendlyLink" >
+    <id column="link_id" property="linkId" jdbcType="INTEGER" />
+    <result column="link_name" property="linkName" jdbcType="VARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="link_logo" property="linkLogo" jdbcType="VARCHAR" />
+    <result column="show_order" property="showOrder" jdbcType="TINYINT" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="display" property="display" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    link_id, link_name, link_url, link_logo, show_order, `describe`, target, display
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from friendly_link
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from friendly_link
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.FriendlyLink" >
+    insert into friendly_link (link_id, link_name, link_url, 
+      link_logo, show_order, `describe`,
+      target, display)
+    values (#{linkId,jdbcType=INTEGER}, #{linkName,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, 
+      #{linkLogo,jdbcType=VARCHAR}, #{showOrder,jdbcType=TINYINT}, #{describe,jdbcType=VARCHAR}, 
+      #{target,jdbcType=VARCHAR}, #{display,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.FriendlyLink" >
+    insert into friendly_link
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="linkId != null" >
+        link_id,
+      </if>
+      <if test="linkName != null" >
+        link_name,
+      </if>
+      <if test="linkUrl != null" >
+        link_url,
+      </if>
+      <if test="linkLogo != null" >
+        link_logo,
+      </if>
+      <if test="showOrder != null" >
+        show_order,
+      </if>
+      <if test="describe != null" >
+          `describe`,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="display != null" >
+        display,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="linkId != null" >
+        #{linkId,jdbcType=INTEGER},
+      </if>
+      <if test="linkName != null" >
+        #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkLogo != null" >
+        #{linkLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="showOrder != null" >
+        #{showOrder,jdbcType=TINYINT},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null" >
+        #{display,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.FriendlyLink" >
+    update friendly_link
+    <set >
+      <if test="linkName != null" >
+        link_name = #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkLogo != null" >
+        link_logo = #{linkLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="showOrder != null" >
+        show_order = #{showOrder,jdbcType=TINYINT},
+      </if>
+      <if test="describe != null" >
+          `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null" >
+        display = #{display,jdbcType=INTEGER},
+      </if>
+    </set>
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.FriendlyLink" >
+    update friendly_link
+    set link_name = #{linkName,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      link_logo = #{linkLogo,jdbcType=VARCHAR},
+      show_order = #{showOrder,jdbcType=TINYINT},
+      `describe` = #{describe,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      display = #{display,jdbcType=INTEGER}
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </update>
+<!--友情链接根据名称分页查询-->
+<select id="searchFriendlyLinkBylinkName" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM friendly_link
+    <where>
+        <if test="linkName!=null">
+            and link_name like #{linkName}
+        </if>
+    </where>
+    ORDER BY show_order ASC
+</select>
+</mapper>

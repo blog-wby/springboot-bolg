@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.Article" >
+    <id column="article_id" property="articleId" jdbcType="SMALLINT" />
+    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
+    <result column="article_time" property="articleTime" jdbcType="TIMESTAMP" />
+    <result column="article_ip" property="articleIp" jdbcType="VARCHAR" />
+    <result column="article_click" property="articleClick" jdbcType="INTEGER" />
+    <result column="article_type" property="articleType" jdbcType="INTEGER" />
+    <result column="sort_article_id" property="sortArticleId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="TINYINT" />
+    <result column="article_pattern" property="articlePattern" jdbcType="INTEGER" />
+    <result column="article_up" property="articleUp" jdbcType="TINYINT" />
+    <result column="article_support" property="articleSupport" jdbcType="TINYINT" />
+    <result column="article_img_url" property="articleImgUrl" jdbcType="VARCHAR" />
+    <result column="articleDescription" property="articledescription" jdbcType="VARCHAR" />
+    <result column="tagcloud" property="tagcloud" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wbyweb.bolg.po.ArticleWithBLOBs" extends="BaseResultMap" >
+    <result column="article_html" property="articleHtml" jdbcType="LONGVARCHAR" />
+    <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+    <!--关联查询-->
+  <resultMap id="ResultLnikeMap" type="com.wbyweb.bolg.po.Article" extends="BaseResultMap">
+      <association property="user" javaType="com.wbyweb.bolg.po.User">
+          <id column="user_id" property="userId"/>
+          <result column="user_name" property="userName"/>
+      </association>
+      <association property="articleSort" javaType="com.wbyweb.bolg.po.ArticleSort">
+          <id column="sort_article_id" property="sortArticleId"/>
+          <result column="sort_article_name" property="sortArticleName"/>
+      </association>
+  </resultMap>
+    <resultMap id="ResultLnikeMapBLOBs" type="com.wbyweb.bolg.po.ArticleWithBLOBs" extends="ResultMapWithBLOBs">
+        <association property="user" javaType="com.wbyweb.bolg.po.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="articleSort" javaType="com.wbyweb.bolg.po.ArticleSort">
+            <id column="sort_article_id" property="sortArticleId"/>
+            <result column="sort_article_name" property="sortArticleName"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Blob_ResultLnikeMap" type="com.wbyweb.bolg.po.ArticleWithBLOBs" extends="ResultMapWithBLOBs">
+        <association property="user" javaType="com.wbyweb.bolg.po.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="articleSort" javaType="com.wbyweb.bolg.po.ArticleSort">
+            <id column="sort_article_id" property="sortArticleId"/>
+            <result column="sort_article_name" property="sortArticleName"/>
+        </association>
+    </resultMap>
+
+  <sql id="Base_Column_List" >
+    article_id, article_name, article_time, article_ip, article_click, article_type, 
+    sort_article_id, user_id, type_id, article_pattern, article_up, article_support, 
+    article_img_url, articleDescription, tagcloud
+  </sql>
+  <sql id="Blob_Column_List" >
+    article_html, article_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where article_id = #{articleId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from article
+    where article_id = #{articleId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.ArticleWithBLOBs" >
+    insert into article (article_id, article_name, article_time, 
+      article_ip, article_click, article_type, 
+      sort_article_id, user_id, type_id, 
+      article_pattern, article_up, article_support, 
+      article_img_url, articleDescription, tagcloud, 
+      article_html, article_content)
+    values (#{articleId,jdbcType=SMALLINT}, #{articleName,jdbcType=VARCHAR}, #{articleTime,jdbcType=TIMESTAMP}, 
+      #{articleIp,jdbcType=VARCHAR}, #{articleClick,jdbcType=INTEGER}, #{articleType,jdbcType=INTEGER}, 
+      #{sortArticleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{typeId,jdbcType=TINYINT}, 
+      #{articlePattern,jdbcType=INTEGER}, #{articleUp,jdbcType=TINYINT}, #{articleSupport,jdbcType=TINYINT}, 
+      #{articleImgUrl,jdbcType=VARCHAR}, #{articledescription,jdbcType=VARCHAR}, #{tagcloud,jdbcType=VARCHAR}, 
+      #{articleHtml,jdbcType=LONGVARCHAR}, #{articleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.ArticleWithBLOBs" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="articleName != null" >
+        article_name,
+      </if>
+      <if test="articleTime != null" >
+        article_time,
+      </if>
+      <if test="articleIp != null" >
+        article_ip,
+      </if>
+      <if test="articleClick != null" >
+        article_click,
+      </if>
+      <if test="articleType != null" >
+        article_type,
+      </if>
+      <if test="sortArticleId != null" >
+        sort_article_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="articlePattern != null" >
+        article_pattern,
+      </if>
+      <if test="articleUp != null" >
+        article_up,
+      </if>
+      <if test="articleSupport != null" >
+        article_support,
+      </if>
+      <if test="articleImgUrl != null" >
+        article_img_url,
+      </if>
+      <if test="articledescription != null" >
+        articleDescription,
+      </if>
+      <if test="tagcloud != null" >
+        tagcloud,
+      </if>
+      <if test="articleHtml != null" >
+        article_html,
+      </if>
+      <if test="articleContent != null" >
+        article_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        #{articleId,jdbcType=SMALLINT},
+      </if>
+      <if test="articleName != null" >
+        #{articleName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleTime != null" >
+        #{articleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleIp != null" >
+        #{articleIp,jdbcType=VARCHAR},
+      </if>
+      <if test="articleClick != null" >
+        #{articleClick,jdbcType=INTEGER},
+      </if>
+      <if test="articleType != null" >
+        #{articleType,jdbcType=INTEGER},
+      </if>
+      <if test="sortArticleId != null" >
+        #{sortArticleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=TINYINT},
+      </if>
+      <if test="articlePattern != null" >
+        #{articlePattern,jdbcType=INTEGER},
+      </if>
+      <if test="articleUp != null" >
+        #{articleUp,jdbcType=TINYINT},
+      </if>
+      <if test="articleSupport != null" >
+        #{articleSupport,jdbcType=TINYINT},
+      </if>
+      <if test="articleImgUrl != null" >
+        #{articleImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="articledescription != null" >
+        #{articledescription,jdbcType=VARCHAR},
+      </if>
+      <if test="tagcloud != null" >
+        #{tagcloud,jdbcType=VARCHAR},
+      </if>
+      <if test="articleHtml != null" >
+        #{articleHtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null" >
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.ArticleWithBLOBs" >
+    update article
+    <set >
+      <if test="articleName != null" >
+        article_name = #{articleName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleTime != null" >
+        article_time = #{articleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleIp != null" >
+        article_ip = #{articleIp,jdbcType=VARCHAR},
+      </if>
+      <if test="articleClick != null" >
+        article_click = #{articleClick,jdbcType=INTEGER},
+      </if>
+      <if test="articleType != null" >
+        article_type = #{articleType,jdbcType=INTEGER},
+      </if>
+      <if test="sortArticleId != null" >
+        sort_article_id = #{sortArticleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=TINYINT},
+      </if>
+      <if test="articlePattern != null" >
+        article_pattern = #{articlePattern,jdbcType=INTEGER},
+      </if>
+      <if test="articleUp != null" >
+        article_up = #{articleUp,jdbcType=TINYINT},
+      </if>
+      <if test="articleSupport != null" >
+        article_support = #{articleSupport,jdbcType=TINYINT},
+      </if>
+      <if test="articleImgUrl != null" >
+        article_img_url = #{articleImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="articledescription != null" >
+        articleDescription = #{articledescription,jdbcType=VARCHAR},
+      </if>
+      <if test="tagcloud != null" >
+        tagcloud = #{tagcloud,jdbcType=VARCHAR},
+      </if>
+      <if test="articleHtml != null" >
+        article_html = #{articleHtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null" >
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wbyweb.bolg.po.ArticleWithBLOBs" >
+    update article
+    set article_name = #{articleName,jdbcType=VARCHAR},
+      article_time = #{articleTime,jdbcType=TIMESTAMP},
+      article_ip = #{articleIp,jdbcType=VARCHAR},
+      article_click = #{articleClick,jdbcType=INTEGER},
+      article_type = #{articleType,jdbcType=INTEGER},
+      sort_article_id = #{sortArticleId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=TINYINT},
+      article_pattern = #{articlePattern,jdbcType=INTEGER},
+      article_up = #{articleUp,jdbcType=TINYINT},
+      article_support = #{articleSupport,jdbcType=TINYINT},
+      article_img_url = #{articleImgUrl,jdbcType=VARCHAR},
+      articleDescription = #{articledescription,jdbcType=VARCHAR},
+      tagcloud = #{tagcloud,jdbcType=VARCHAR},
+      article_html = #{articleHtml,jdbcType=LONGVARCHAR},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR}
+    where article_id = #{articleId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.Article" >
+    update article
+    set article_name = #{articleName,jdbcType=VARCHAR},
+      article_time = #{articleTime,jdbcType=TIMESTAMP},
+      article_ip = #{articleIp,jdbcType=VARCHAR},
+      article_click = #{articleClick,jdbcType=INTEGER},
+      article_type = #{articleType,jdbcType=INTEGER},
+      sort_article_id = #{sortArticleId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=TINYINT},
+      article_pattern = #{articlePattern,jdbcType=INTEGER},
+      article_up = #{articleUp,jdbcType=TINYINT},
+      article_support = #{articleSupport,jdbcType=TINYINT},
+      article_img_url = #{articleImgUrl,jdbcType=VARCHAR},
+      articleDescription = #{articledescription,jdbcType=VARCHAR},
+      tagcloud = #{tagcloud,jdbcType=VARCHAR}
+    where article_id = #{articleId,jdbcType=SMALLINT}
+  </update>
+    <!--查询首页展示内容-->
+    <select id="searchIndexArticleByArticlename" resultMap="ResultLnikeMap" parameterType="java.util.Map" >
+      SELECT article_id,article_name,articleDescription,article_time,article_click,article_img_url,article_pattern,u.user_name,ar.sort_article_name
+      ,(SELECT COUNT(id) FROM user_comment uc WHERE uc.`article_id` = a.`article_id`) total
+      FROM article a LEFT JOIN `user` u ON a.user_id=u.user_id
+      LEFT JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id
+      <where>
+        <if test="articlename!=null">
+          and article_name like #{articlename}
+        </if>
+      </where>
+      ORDER BY article_time DESC,article_click DESC
+    </select>
+    <!--根据类型查询文章-->
+    <select id="searchIndexArticleBySortid" resultMap="ResultLnikeMap" parameterType="java.util.Map" >
+        SELECT article_id,article_name,articleDescription,article_time,article_type,article_click,article_img_url,u.user_name,ar.sort_article_name
+        FROM article a LEFT JOIN `user` u ON a.user_id=u.user_id
+        LEFT JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id
+        <where>
+            <if test="sortArticleId!=null">
+                and a.sort_article_id = #{sortArticleId}
+            </if>
+        </where>
+        ORDER BY article_time DESC,article_click DESC
+    </select>
+    <!--根据ID查询文章-->
+    <select id="searchIndexArticleByArticleId" resultMap="Blob_ResultLnikeMap" parameterType="java.util.Map" >
+        SELECT article_id,article_name,articleDescription,article_time,article_html,article_content,article_type,article_click,article_img_url,article_html,tagcloud,u.user_name,ar.sort_article_name
+         ,(SELECT COUNT(id) FROM user_comment uc WHERE uc.`article_id` = a.`article_id`) total
+        FROM article a LEFT JOIN user u ON a.user_id=u.user_id
+        LEFT JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id
+        where a.article_id = #{articleId}
+        ORDER BY article_time DESC,article_click DESC
+    </select>
+    <!--更新文章查看数量-->
+    <update id="updateArticleClickBySortid" parameterType="java.util.Map" >
+    update article
+    set article_click = article_click+1
+    where article_id = #{articleId,jdbcType=SMALLINT}
+  </update>
+    <!--查询首页推荐文章-->
+    <select id="searchIndexArticleByArticleSupport" resultMap="ResultLnikeMap" parameterType="java.util.Map" >
+        SELECT article_id,article_name,articleDescription,article_time,article_click,article_img_url,article_pattern,u.user_name,ar.sort_article_name
+        FROM article a LEFT JOIN `user` u ON a.user_id=u.user_id
+        LEFT JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id WHERE article_support=1
+    </select>
+    <!--查询最新评论文章-->
+    <select id="searchNewestUserCommentArticle" resultMap="BaseResultMap" parameterType="java.util.Map" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM article a
+        WHERE EXISTS (
+        SELECT article_id FROM user_comment uc
+        WHERE a.article_id=uc.article_id GROUP BY uc.article_id ORDER BY created_at ASC)
+    </select>
+    <!--查询所有文章-->
+    <select id="searchAllArticleList" resultMap="Blob_ResultLnikeMap" parameterType="java.util.Map" >
+        SELECT a.article_id,article_name,articleDescription,article_time,
+          article_click, article_img_url, article_pattern, article_html,
+          tagcloud, u.user_name,u.user_id, ar.sort_article_name, (SELECT COUNT(id) FROM user_comment uc WHERE uc.`article_id` = a.`article_id`) total
+        FROM article a
+          LEFT JOIN `user` u
+            ON a.user_id = u.user_id
+          LEFT JOIN article_sort ar
+            ON a.sort_article_id = ar.sort_article_id
+    </select>
+    <!--查询所有标签-->
+    <select id="searchAlltagcloud" resultMap="BaseResultMap" parameterType="java.util.Map" >
+      SELECT tagcloud FROM article ORDER BY RAND() LIMIT 3
+    </select>
+
+    <select id="searchIndexArticleByUserId" resultMap="ResultLnikeMapBLOBs" parameterType="java.util.Map" >
+        SELECT article_id,article_name,articleDescription,article_time,article_click,article_img_url,article_pattern,u.user_name,u.user_id,ar.sort_article_name
+        ,(SELECT COUNT(id) FROM user_comment uc WHERE uc.`article_id` = a.`article_id`) total
+        FROM article a LEFT JOIN `user` u ON a.user_id=u.user_id
+        LEFT JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id
+        <where>
+            <if test="articlename!=null">
+                and article_name like #{articlename}
+            </if>
+            <if test="userid!=null">
+                and u.user_id = #{userid}
+            </if>
+        </where>
+        ORDER BY article_time DESC,article_click DESC
+    </select>
+</mapper>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>个人中心-全栈开发</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="魏彪毅个人博客,全栈开发,个人技术分享,全栈技术分享,Full Stack,个人博客,WEB学习" />
+    <meta name="description" content="小白程序员的百万年薪|如何学习java|如何学习SpringBoot|如何学习Spring|快速SpringBoot建站" />
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/wbyblog/css/nprogress.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/wbyblog/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/wbyblog/images/icon.png}">
+    <script th:src="@{/wbyblog/js/jquery-2.1.4.min.js}"></script>
+    <script th:src="@{/wbyblog/js/nprogress.js}"></script>
+    <script th:src="@{/wbyblog/js/jquery.lazyload.min.js}"></script>
+	<!--[if gte IE 9]>
+	<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+	<script src="js/html5shiv.min.js" type="text/javascript"></script>
+	<script src="js/respond.min.js" type="text/javascript"></script>
+	<script src="js/selectivizr-min.js" type="text/javascript"></script>
+	<![endif]-->
+	<!--[if lt IE 9]>
+	<script>window.location.href='upgrade-browser.html';</script>
+	<![endif]-->
+</head>
+
+<body class="user-select">
+    <!--引入顶部导航-->
+    <div th:replace="commons/commons-top::topnavigation"></div>
+	<section class="container">
+		<div class="content-wrap">
+			<div class="content content-wrap">
+				<div id="focusslide" class="carousel slide" data-ride="carousel">
+					<div class="title">
+						<h3>个人中心</h3>
+						<div class="more">
+							<a href="#" title="我的文章">我的文章</a>
+							<a href="#" title="我的相册">我的相册</a>
+							<a href="#" title="我的读者">我的读者</a>
+							<a href="#" title="靠谱网赚">靠谱网赚</a>
+							<a href="#" title="资讯分享">资讯分享</a>
+						</div>
+					</div>
+				</div>
+				<article class="excerpt-minic excerpt-minic-index">
+					<article class="excerpt excerpt-3" style="" th:each="article:${pageInfo.list}">
+                        <a class="focus" th:href="@{/article/detailedarticle/}+${article.articleId}" th:title="${article.articleSort.sortArticleName}">
+                            <img class="thumb" th:data-original="${ftpip}+${article.articleImgUrl}" th:src="${ftpip}+${article.articleImgUrl}" th:alt="${article.articleName}" style="display: inline;">
+                        </a>
+                        <header><a class="cat" href="#" th:title="${article.articleSort.sortArticleName}">[[${article.articleSort.sortArticleName}]]<i></i></a>
+                            <h2>
+                                <a th:href="@{/article/detailedarticle/}+${article.articleId}" th:title="${article.articleName}" th:text="${article.articleName}">用DTcms做一个独立博客网站（响应式模板）</a>
+                            </h2>
+                        </header>
+                        <p class="meta">
+                            <time class="time"><i class="glyphicon glyphicon-time"></i> [[${#dates.format(article.articleTime, 'yyyy-MM-dd')}]]</time>
+                            <span><a class="comment" href="##comment" title="作者" ><i class="glyphicon glyphicon-user"></i> [[${article.user.userName}]]</a></span>
+                            <span class="views"><i class="glyphicon glyphicon-eye-open"></i> [[${article.articleClick}]]</span>
+                            <span><a class="comment" href="##comment" title="评论" ><i class="glyphicon glyphicon-comment"></i> [[${article.total}]] </a></span>
+                        </p>
+                        <p class="note">[[${article.articledescription}]]</p>
+						<div class=" col-sm-2 pull-right hidden-xs loadMeinv">
+							<a th:href="@{/article/editDetailedArticle/}+${article.articleId}" title="编辑" style="color: #7c7c7c;"><span style="color: #2299DD;">编辑</span></a><br />
+							<a href="#" style="color: #7c7c7c;" title="删除"><span style="color: #C9302C;">删除</span></a>
+						</div>
+					</article>
+
+				</article>
+			</div>
+		</div>
+	</section>
+
+    <!--引入底部-->
+    <div th:replace="commons/commons-footer::footer"></div>
+
+    <div id="rightClickMenu" style="display: none; top: 141px; left: 773px;">
+        <ul class="list-group rightClickMenuList">
+            <li class="list-group-item disabled">欢迎访问魏彪毅的博客</li>
+            <li class="list-group-item disabled"><span>可复制：</span>代码框内的文字。</li>
+            <li class="list-group-item disabled"><span>方法：</span>Ctrl+C。</li>
+        </ul>
+    </div>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/wbyblog/js/jquery.ias.js}"></script>
+    <script th:src="@{/wbyblog/js/scripts.js}"></script>
+</body>
+
+</html>

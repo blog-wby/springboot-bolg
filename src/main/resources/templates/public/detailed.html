@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>[[${data.data.articleName}]]-全栈开发</title>
+    <meta name="keywords" th:content="${data.data.tagcloud}+'魏彪毅个人博客,全栈开发,个人技术分享,全栈技术分享,Full Stack,个人博客,WEB学习'"  />
+    <meta name="description" th:content="${data.data.tagcloud}+'小白程序员的百万年薪|如何学习java|如何学习SpringBoot|如何学习Spring|快速SpringBoot建站'" />
+    <meta name="baidu-site-verification" content="224jcSLVTv" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/wbyblog/css/nprogress.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/wbyblog/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <!--编辑器-->
+    <link th:href="@{/editor.md-master/examples/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/editor.md-master/css/editormd.preview.css}" />
+
+    <link rel="apple-touch-icon-precomposed" th:href="@{/wbyblog/images/icon.png}">
+
+    <script th:src="@{/wbyblog/js/jquery-2.1.4.min.js}"></script>
+    <script th:src="@{/wbyblog/js/nprogress.js}"></script>
+    <script th:src="@{/wbyblog/js/jquery.lazyload.min.js}"></script>
+    <!--[if gte IE 9]>
+    <script src="/wbyblog/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/wbyblog/js/html5shiv.min.js" type="text/javascript"></script>
+    <script src="/wbyblog/js/respond.min.js" type="text/javascript"></script>
+    <script src="/wbyblog/js/selectivizr-min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script>window.location.href = 'upgrade-browser.html';</script>
+    <![endif]-->
+</head>
+<body class="user-select single">
+<!--引入顶部导航-->
+<div th:replace="commons/commons-top::topnavigation"></div>
+
+<section class="container">
+    <div class="content-wrap">
+        <div class="content">
+            <header class="article-header">
+                <input type="hidden" th:value="${data.data.articleId}" id="articleId">
+                <h1 class="article-title"><a href="#" th:title="${data.data.articleName}" th:text="${data.data.articleName}">标题</a></h1>
+                <div class="article-meta">
+                    <span class="item article-meta-time">
+	                    <time class="time" data-toggle="tooltip" data-placement="bottom" title="" th:data-original-title="'发表时间：'+${#dates.format(data.data.articleTime, 'yyyy-MM-dd')}"><i class="glyphicon glyphicon-time"></i> [[${#dates.format(data.data.articleTime, 'yyyy-MM-dd')}]]</time>
+                    </span>
+                    <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom" title=""
+                          th:data-original-title="'来源：'+${data.data.user.userName}"><i class="glyphicon glyphicon-globe"></i> [[${data.data.user.userName}]]
+                    </span>
+                    <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" title=""
+                          th:data-original-title="${data.data.ArticleSort.sortArticleName}"><i class="glyphicon glyphicon-list"></i>
+                        <a href="#" th:title="${data.data.ArticleSort.sortArticleName}"> [[${data.data.ArticleSort.sortArticleName}]]</a>
+                    </span>
+                    <span class="item article-meta-views" data-toggle="tooltip" data-placement="bottom" title=""
+                          th:data-original-title="'浏览量：'+${data.data.articleClick}">
+                        <i class="glyphicon glyphicon-eye-open"></i> [[${data.data.articleClick}]]
+                    </span>
+                    <span class="item article-meta-comment" data-toggle="tooltip" data-placement="bottom" title=""
+                            data-original-title="评论量">
+                        <i class="glyphicon glyphicon-comment"></i> [[${data.data.total}]]
+                    </span>
+                </div>
+            </header>
+            <article class="article-content">
+                <p><img th:data-original="@{/wbyblog/images/201610181557196870.jpg}" th:src="@{/wbyblog/images/201610181557196870.jpg}" alt="魏彪毅的博客"/></p>
+                <!--文章开始-->
+                <strong>简介</strong>
+                <p>[[${data.data.articledescription}]]</p>
+                <div id="layout" class="editor">
+                    <div id="editormd-html">
+                        <textarea id="append-test" style="display:none;">[[${data.data.articleHtml}]]</textarea>
+                    </div>
+                </div>
+                <!--文章结束-->
+                <div class="bdsharebuttonbox">
+                    <a href="#" class="bds_more" data-cmd="more" title="分享到QQ空间"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+                    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                </div>
+                <script>
+                    window._bd_share_config = {
+                        "common": {
+                            "bdSnsKey": {},
+                            "bdText": "",
+                            "bdMini": "2",
+                            "bdMiniList": false,
+                            "bdPic": "",
+                            "bdStyle": "1",
+                            "bdSize": "32"
+                        }, "share": {}
+                    };
+                    with (document) 0[(getElementsByTagName('head')[0] || body).
+                    appendChild(createElement('script')).src =
+                        'http://bdimg.share.baidu.com/static/api/js/share.js?v=0.js?cdnversion='];
+                </script>
+            </article>
+            <div class="article-tags">
+                标签：<a href="#list/2/" rel="tag" th:each="tagcloud:${data.data.tagclouds}" th:text="${tagcloud}">DTcms博客</a>
+            </div>
+            <div class="relates">
+                <div class="title">
+                    <h3>相关推荐</h3>
+                </div>
+                <ul>
+                    <li><a href="#" title="魏彪毅的个人博客">魏彪毅的个人博客</a></li>
+                    <li><a href="#" title="杨青的个人博客">杨青的个人博客</a></li>
+                    <li><a href="#" title="SpringBoot 集成验证码kaptcha实现验证码功能">SpringBoot 集成验证码kaptcha实现验证码功能</a></li>
+                </ul>
+            </div>
+            <div class="title" id="comment">
+                <h3>评论</h3>
+            </div>
+            <div id="respond">
+                <form class="respond-form"  name="comment-form1">
+                    <div class="comment">
+                        <div class="comment-box">
+                            <input type="hidden" th:value="0" class="userCommenid"/>
+                            <input type="hidden" th:value="0" class="replyuid"/>
+                            <textarea placeholder="您的评论或留言（必填）" name="comment" class="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
+                            <div class="comment-ctrl">
+                                <div class="comment-prompt" style="display: none;">
+                                    <i class="fa fa-spin fa-circle-o-notch"></i> <span class="comment-prompt-text">评论正在提交中...请稍后</span>
+                                </div>
+                                <div class="comment-success" style="display: none;"><i class="fa fa-check"></i> <span
+                                        class="comment-prompt-text">评论提交成功...</span></div>
+                                <button type="button" name="comment-submit" class="comment-submit" tabindex="4">评论</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="postcomments">
+                <ol id="comment_list" class="commentlist" th:each="listMap,stat: ${listMaps}">
+                    <li class="comment-content"><span class="comment-f">no. [[${stat.count}]]</span>
+                        <div class="comment-content">
+                            <p><a class="address" href="#" rel="nofollow" target="_blank" title="聊天记录">[[${listMap['userName']}]]</a>
+                                <span class="time">([[${#dates.format(listMap['createdAt'], 'yyyy-MM-dd HH:mm:ss')}]])</span>
+                                <br>[[${listMap['content']}]]
+                            </p><a href="javascript:void(0);" style="float: right;" onclick="replys(this)" title="回复">回复</a>
+                            <!--回复begin-->
+                            <div style="display: none;" class="replyss">
+                                <form  name="comment-form" action="" method="POST">
+                                    <div class="comment">
+                                        <div class="comment-box">
+                                            <input type="hidden" th:value="${listMap['id']}" class="userCommenid"/>
+                                            <input type="hidden" th:value="0" class="replyuid"/>
+                                            <textarea placeholder="您的评论或留言（必填）" name="comment-textarea" class="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
+                                            <div class="comment-ctrl">
+                                                <div class="comment-prompt" style="display: none;">
+                                                    <i class="fa fa-spin fa-circle-o-notch"></i><span class="comment-prompt-text">评论正在提交中...请稍后</span>
+                                                </div>
+                                                <div class="comment-success" style="display: none;"><i class="fa fa-check"></i> <span
+                                                        class="comment-prompt-text">评论提交成功...</span></div>
+                                                <button type="button" name="comment-submit" class="comment-submit" tabindex="4">回复</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--回复end-->
+                        </div>
+                        <div th:include="this::row(${listMap['children']},1,${listMap['userName']})"></div>
+                        <div th:fragment="row(lists,lv,upusername)">
+                            <div class="comment-content" th:each="list,stat:${lists}" th:style="|padding-left:${6*lv}px|">
+                                <p><a class="address" href="#" rel="nofollow" target="_blank" title="聊天记录">[[${list['userName']}]][回复]-&ndash;&gt;<span th:text="${upusername}"></span></a>
+                                    <span class="time">([[${#dates.format(list['createdAt'], 'yyyy-MM-dd HH:mm:ss')}]])</span>
+                                    <br>[[${list['content']}]]</p>
+                                <a href="javascript:void(0);" style="float:right;" onclick="replys(this)" title="回复">回复</a>
+                                <!--回复begin-->
+                                <div style="display: none;" class="replyss">
+                                    <form  name="comment-form" action="" method="POST">
+                                        <div class="comment">
+                                            <div class="comment-box">
+                                                <input type="hidden" th:value="${list['id']}" class="replyuid"/>
+                                                <input type="hidden" th:value="${listMap['id']}" class="userCommenid"/>
+                                                <textarea placeholder="您的评论或留言（必填）" name="comment-textarea" class="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
+                                                <div class="comment-ctrl">
+                                                    <div class="comment-prompt" style="display: none;">
+                                                        <i class="fa fa-spin fa-circle-o-notch"></i><span class="comment-prompt-text">评论正在提交中...请稍后</span>
+                                                    </div>
+                                                    <div class="comment-success" style="display: none;"><i class="fa fa-check"></i> <span
+                                                            class="comment-prompt-text">评论提交成功...</span></div>
+                                                    <button type="button" name="comment-submit" class="comment-submit" tabindex="4">回复</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--回复end-->
+                                <div th:include="this::row(${list['children']},1,${list['userName']})"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <aside class="sidebar">
+        <div class="fixed">
+            <div class="widget widget-tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#notice" aria-controls="notice" role="tab" data-toggle="tab" draggable="false" title="统计信息">统计信息</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab" draggable="false" title="联系站长">联系站长</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane contact active" id="notice">
+                        <h2>日志总数:
+                            888篇
+                        </h2>
+                        <h2>网站运行:
+                            <span id="sitetime">88天 </span>
+                        </h2>
+                    </div>
+                    <div role="tabpanel" class="tab-pane contact" id="contact">
+                        <h2>QQ:
+                            <a href="" target="_blank" rel="nofollow" data-toggle="tooltip" data-placement="bottom"
+                               title="QQ:1509348953" draggable="false" data-original-title="QQ:1509348953">1509348953</a>
+                        </h2>
+                        <h2>Email:
+                            <a href="mailto:weibiaoyi@126.com" target="_blank" data-toggle="tooltip" rel="nofollow"
+                               data-placement="bottom" title="weibiaoyi@126.com" draggable="false"
+                               data-original-title="Email:weibiaoyi@126.com">weibiaoyi@126.com</a></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="widget widget_search">
+                <form class="navbar-form" th:action="@{/article/solrsearch/1}" method="post">
+                    <div class="input-group">
+                        <input type="text" name="articleName" class="form-control" size="35" placeholder="请输入关键字" maxlength="15" autocomplete="off">
+                        <span class="input-group-btn">
+		                    <button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
+		                </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="widget widget_hot">
+            <h3>最新评论文章</h3>
+            <ul>
+                <!--遍历Begin-->
+                <li th:each="article:${newestArticle.list}">
+                    <a th:title="${article.articleName}" th:href="@{/article/detailedarticle/}+${article.articleId}">
+                        <span class="thumbnail">
+				            <img class="thumb" th:data-original="${ftpip}+${article.articleImgUrl}" th:src="${ftpip}+${article.articleImgUrl}" th:alt="${article.articleName}" style="display: block;">
+                        </span>
+                        <span class="text">[[${article.articleName}]]</span>
+                        <span class="muted">
+                            <i class="glyphicon glyphicon-time"></i> [[${#dates.format(article.articleTime, 'yyyy-MM-dd')}]]
+			            </span>
+                        <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> [[${article.articleClick}]]</span>
+                    </a>
+                </li>
+                <!--遍历End-->
+            </ul>
+        </div>
+        <div class="widget widget_sentence">
+            <a href="#" target="_blank" rel="nofollow" title="魏彪毅的博客">
+                <img style="width: 100%" th:src="@{/wbyblog/images/ad.jpg}" alt="魏彪毅的博客">
+            </a>
+        </div>
+        <div class="widget widget_sentence">
+            <a href="#" target="_blank" rel="nofollow" title="魏彪毅的博客">
+                <img style="width: 100%" th:src="@{/wbyblog/images/201610241224221511.jpg}" alt="魏彪毅的博客"></a>
+        </div>
+    </aside>
+</section>
+<!--引入底部-->
+<div th:replace="commons/commons-footer::footer"></div>
+<div id="rightClickMenu" style="display: none; top: 141px; left: 773px;">
+    <ul class="list-group rightClickMenuList">
+        <li class="list-group-item disabled">欢迎访问魏彪毅的博客</li>
+        <li class="list-group-item disabled"><span>可复制：</span>代码框内的文字。</li>
+        <li class="list-group-item disabled"><span>方法：</span>Ctrl+C。</li>
+    </ul>
+</div>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/wbyblog/js/jquery.ias.js}"></script>
+<script th:src="@{/wbyblog/js/jquery.timers-1.2.js}"></script>
+<script th:src="@{/wbyblog/js/scripts.js}"></script>
+
+<script th:src="@{/editor.md-master/lib/marked.min.js}"></script>
+<script th:src="@{/editor.md-master/lib/prettify.min.js}"></script>
+<script th:src="@{/editor.md-master/lib/raphael.min.js}"></script>
+<script th:src="@{/editor.md-master/lib/underscore.min.js}"></script>
+<script th:src="@{/editor.md-master/lib/sequence-diagram.min.js}"></script>
+<script th:src="@{/editor.md-master/lib/flowchart.min.js}"></script>
+<script th:src="@{/editor.md-master/lib/jquery.flowchart.min.js}"></script>
+
+<script th:src="@{/editor.md-master/editormd.min.js}"></script>
+<script type="text/javascript">
+
+    function replys(e){
+        $(".replyss").hide();
+        $(e).next().show();
+    }
+
+    $('.comment-submit').each(function(){
+        $(this).click(function(){
+            var content = $(this).parents().parents().parent('form').find('.comment-textarea').val();
+            var articleId=$("#articleId").val();
+            var pid = $(this).parents().parents().parent('form').find('.userCommenid').val();
+            var replyUid=$(this).parents().parents().parent('form').find('.replyuid').val();
+            if(replyUid!=0){pid=0;}
+            console.log('content:'+content+'ArticleId:'+articleId+'Pid'+pid);
+            if(content==null || content==""){
+                alert("您的评论或留言（必填）");
+                return false;
+            }
+            $(".comment-prompt").show();
+            $.ajax({
+                data: {'content':content,'articleId':articleId,'pid':pid,'replyUid':replyUid},
+                url: "/usercomment/save", dataType: "json",
+                async: true, type: "POST", timeout: 100000,// 调小超时时间会引起异常s
+                success:function (data) {
+                    if(data.status==0){
+                        $(".comment-prompt").hide();
+                        $(".comment-success").show();
+                        $('body').oneTime('1s',function(){
+                            $(".comment-success").hide();
+                            $("#comment-textarea").val('');
+                            window.location.reload();
+                        });
+                    }else{
+                        $(".comment-prompt").hide();
+                        alert(data.msg);
+                    }
+                }
+            })
+        });
+    });
+    /*百度统计代码*/
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else{
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    $(function() {
+        editormd.markdownToHTML("editormd-html", {
+            htmlDecode      : "style,script,iframe",  // you can filter tags decode
+            emoji           : true,
+            taskList        : true,
+            tex             : true,  // 默认不解析
+            flowChart       : true,  // 默认不解析
+            sequenceDiagram : true,  // 默认不解析
+        });
+    });
+</script>
+
+</body>
+</html>

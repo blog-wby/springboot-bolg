@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.VisitorMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.Visitor" >
+    <id column="v_id" property="vId" jdbcType="INTEGER" />
+    <result column="visitor_id" property="visitorId" jdbcType="INTEGER" />
+    <result column="visitor_time" property="visitorTime" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="visitor_ip" property="visitorIp" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="where_id" property="whereId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    v_id, visitor_id, visitor_time, user_id, visitor_ip, type_id, where_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from visitor
+    where v_id = #{vId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from visitor
+    where v_id = #{vId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.Visitor" >
+    insert into visitor (v_id, visitor_id, visitor_time, 
+      user_id, visitor_ip, type_id, 
+      where_id)
+    values (#{vId,jdbcType=INTEGER}, #{visitorId,jdbcType=INTEGER}, #{visitorTime,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{visitorIp,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
+      #{whereId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.Visitor" >
+    insert into visitor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        v_id,
+      </if>
+      <if test="visitorId != null" >
+        visitor_id,
+      </if>
+      <if test="visitorTime != null" >
+        visitor_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="visitorIp != null" >
+        visitor_ip,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="whereId != null" >
+        where_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        #{vId,jdbcType=INTEGER},
+      </if>
+      <if test="visitorId != null" >
+        #{visitorId,jdbcType=INTEGER},
+      </if>
+      <if test="visitorTime != null" >
+        #{visitorTime,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="visitorIp != null" >
+        #{visitorIp,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="whereId != null" >
+        #{whereId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.Visitor" >
+    update visitor
+    <set >
+      <if test="visitorId != null" >
+        visitor_id = #{visitorId,jdbcType=INTEGER},
+      </if>
+      <if test="visitorTime != null" >
+        visitor_time = #{visitorTime,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="visitorIp != null" >
+        visitor_ip = #{visitorIp,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="whereId != null" >
+        where_id = #{whereId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where v_id = #{vId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.Visitor" >
+    update visitor
+    set visitor_id = #{visitorId,jdbcType=INTEGER},
+      visitor_time = #{visitorTime,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      visitor_ip = #{visitorIp,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      where_id = #{whereId,jdbcType=INTEGER}
+    where v_id = #{vId,jdbcType=INTEGER}
+  </update>
+</mapper>

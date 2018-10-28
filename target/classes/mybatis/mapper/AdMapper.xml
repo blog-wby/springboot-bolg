@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.AdMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.Ad" >
+    <id column="ad_id" property="adId" jdbcType="SMALLINT" />
+    <result column="position_id" property="positionId" jdbcType="SMALLINT" />
+    <result column="media_type" property="mediaType" jdbcType="TINYINT" />
+    <result column="ad_name" property="adName" jdbcType="VARCHAR" />
+    <result column="ad_link" property="adLink" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="INTEGER" />
+    <result column="link_man" property="linkMan" jdbcType="VARCHAR" />
+    <result column="link_email" property="linkEmail" jdbcType="VARCHAR" />
+    <result column="link_phone" property="linkPhone" jdbcType="VARCHAR" />
+    <result column="click_count" property="clickCount" jdbcType="INTEGER" />
+    <result column="enabled" property="enabled" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wbyweb.bolg.po.Ad" extends="BaseResultMap" >
+    <result column="ad_code" property="adCode" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ad_id, position_id, media_type, ad_name, ad_link, start_time, end_time, link_man, 
+    link_email, link_phone, click_count, enabled
+  </sql>
+  <sql id="Blob_Column_List" >
+    ad_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ad
+    where ad_id = #{adId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from ad
+    where ad_id = #{adId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.Ad" >
+    insert into ad (ad_id, position_id, media_type, 
+      ad_name, ad_link, start_time, 
+      end_time, link_man, link_email, 
+      link_phone, click_count, enabled, 
+      ad_code)
+    values (#{adId,jdbcType=SMALLINT}, #{positionId,jdbcType=SMALLINT}, #{mediaType,jdbcType=TINYINT}, 
+      #{adName,jdbcType=VARCHAR}, #{adLink,jdbcType=VARCHAR}, #{startTime,jdbcType=INTEGER}, 
+      #{endTime,jdbcType=INTEGER}, #{linkMan,jdbcType=VARCHAR}, #{linkEmail,jdbcType=VARCHAR}, 
+      #{linkPhone,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{enabled,jdbcType=TINYINT}, 
+      #{adCode,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.Ad" >
+    insert into ad
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adId != null" >
+        ad_id,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="mediaType != null" >
+        media_type,
+      </if>
+      <if test="adName != null" >
+        ad_name,
+      </if>
+      <if test="adLink != null" >
+        ad_link,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="linkMan != null" >
+        link_man,
+      </if>
+      <if test="linkEmail != null" >
+        link_email,
+      </if>
+      <if test="linkPhone != null" >
+        link_phone,
+      </if>
+      <if test="clickCount != null" >
+        click_count,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="adCode != null" >
+        ad_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adId != null" >
+        #{adId,jdbcType=SMALLINT},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=SMALLINT},
+      </if>
+      <if test="mediaType != null" >
+        #{mediaType,jdbcType=TINYINT},
+      </if>
+      <if test="adName != null" >
+        #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="adLink != null" >
+        #{adLink,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="linkMan != null" >
+        #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkEmail != null" >
+        #{linkEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="clickCount != null" >
+        #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=TINYINT},
+      </if>
+      <if test="adCode != null" >
+        #{adCode,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.Ad" >
+    update ad
+    <set >
+      <if test="positionId != null" >
+        position_id = #{positionId,jdbcType=SMALLINT},
+      </if>
+      <if test="mediaType != null" >
+        media_type = #{mediaType,jdbcType=TINYINT},
+      </if>
+      <if test="adName != null" >
+        ad_name = #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="adLink != null" >
+        ad_link = #{adLink,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="linkMan != null" >
+        link_man = #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkEmail != null" >
+        link_email = #{linkEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        link_phone = #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="clickCount != null" >
+        click_count = #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=TINYINT},
+      </if>
+      <if test="adCode != null" >
+        ad_code = #{adCode,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ad_id = #{adId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wbyweb.bolg.po.Ad" >
+    update ad
+    set position_id = #{positionId,jdbcType=SMALLINT},
+      media_type = #{mediaType,jdbcType=TINYINT},
+      ad_name = #{adName,jdbcType=VARCHAR},
+      ad_link = #{adLink,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=INTEGER},
+      link_man = #{linkMan,jdbcType=VARCHAR},
+      link_email = #{linkEmail,jdbcType=VARCHAR},
+      link_phone = #{linkPhone,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=TINYINT},
+      ad_code = #{adCode,jdbcType=LONGVARCHAR}
+    where ad_id = #{adId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.Ad" >
+    update ad
+    set position_id = #{positionId,jdbcType=SMALLINT},
+      media_type = #{mediaType,jdbcType=TINYINT},
+      ad_name = #{adName,jdbcType=VARCHAR},
+      ad_link = #{adLink,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=INTEGER},
+      link_man = #{linkMan,jdbcType=VARCHAR},
+      link_email = #{linkEmail,jdbcType=VARCHAR},
+      link_phone = #{linkPhone,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=TINYINT}
+    where ad_id = #{adId,jdbcType=SMALLINT}
+  </update>
+</mapper>

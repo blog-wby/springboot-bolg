@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.PhoneMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.PhoneMessage" >
+    <id column="phone_id" property="phoneId" jdbcType="INTEGER" />
+    <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="contents" property="contents" jdbcType="VARCHAR" />
+    <result column="send_time" property="sendTime" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    phone_id, phone_num, contents, send_time, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from phone_message
+    where phone_id = #{phoneId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from phone_message
+    where phone_id = #{phoneId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.PhoneMessage" >
+    insert into phone_message (phone_id, phone_num, contents, 
+      send_time, user_id)
+    values (#{phoneId,jdbcType=INTEGER}, #{phoneNum,jdbcType=VARCHAR}, #{contents,jdbcType=VARCHAR}, 
+      #{sendTime,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.PhoneMessage" >
+    insert into phone_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="phoneId != null" >
+        phone_id,
+      </if>
+      <if test="phoneNum != null" >
+        phone_num,
+      </if>
+      <if test="contents != null" >
+        contents,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="phoneId != null" >
+        #{phoneId,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null" >
+        #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.PhoneMessage" >
+    update phone_message
+    <set >
+      <if test="phoneNum != null" >
+        phone_num = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null" >
+        contents = #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where phone_id = #{phoneId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.PhoneMessage" >
+    update phone_message
+    set phone_num = #{phoneNum,jdbcType=VARCHAR},
+      contents = #{contents,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER}
+    where phone_id = #{phoneId,jdbcType=INTEGER}
+  </update>
+</mapper>

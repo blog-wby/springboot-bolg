@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.PhotosMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.Photos" >
+    <id column="photo_id" property="photoId" jdbcType="INTEGER" />
+    <result column="photo_name" property="photoName" jdbcType="VARCHAR" />
+    <result column="photo_src" property="photoSrc" jdbcType="VARCHAR" />
+    <result column="photo_description" property="photoDescription" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="sort_id" property="sortId" jdbcType="INTEGER" />
+    <result column="upload_time" property="uploadTime" jdbcType="INTEGER" />
+    <result column="upload_ip" property="uploadIp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    photo_id, photo_name, photo_src, photo_description, user_id, sort_id, upload_time, 
+    upload_ip
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from photos
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from photos
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.Photos" >
+    insert into photos (photo_id, photo_name, photo_src, 
+      photo_description, user_id, sort_id, 
+      upload_time, upload_ip)
+    values (#{photoId,jdbcType=INTEGER}, #{photoName,jdbcType=VARCHAR}, #{photoSrc,jdbcType=VARCHAR}, 
+      #{photoDescription,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{sortId,jdbcType=INTEGER}, 
+      #{uploadTime,jdbcType=INTEGER}, #{uploadIp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.Photos" >
+    insert into photos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="photoId != null" >
+        photo_id,
+      </if>
+      <if test="photoName != null" >
+        photo_name,
+      </if>
+      <if test="photoSrc != null" >
+        photo_src,
+      </if>
+      <if test="photoDescription != null" >
+        photo_description,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="sortId != null" >
+        sort_id,
+      </if>
+      <if test="uploadTime != null" >
+        upload_time,
+      </if>
+      <if test="uploadIp != null" >
+        upload_ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="photoId != null" >
+        #{photoId,jdbcType=INTEGER},
+      </if>
+      <if test="photoName != null" >
+        #{photoName,jdbcType=VARCHAR},
+      </if>
+      <if test="photoSrc != null" >
+        #{photoSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="photoDescription != null" >
+        #{photoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sortId != null" >
+        #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null" >
+        #{uploadTime,jdbcType=INTEGER},
+      </if>
+      <if test="uploadIp != null" >
+        #{uploadIp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.Photos" >
+    update photos
+    <set >
+      <if test="photoName != null" >
+        photo_name = #{photoName,jdbcType=VARCHAR},
+      </if>
+      <if test="photoSrc != null" >
+        photo_src = #{photoSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="photoDescription != null" >
+        photo_description = #{photoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sortId != null" >
+        sort_id = #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null" >
+        upload_time = #{uploadTime,jdbcType=INTEGER},
+      </if>
+      <if test="uploadIp != null" >
+        upload_ip = #{uploadIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.Photos" >
+    update photos
+    set photo_name = #{photoName,jdbcType=VARCHAR},
+      photo_src = #{photoSrc,jdbcType=VARCHAR},
+      photo_description = #{photoDescription,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      sort_id = #{sortId,jdbcType=INTEGER},
+      upload_time = #{uploadTime,jdbcType=INTEGER},
+      upload_ip = #{uploadIp,jdbcType=VARCHAR}
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbyweb.bolg.mapper.UserCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.wbyweb.bolg.po.UserComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="article_id" property="articleId" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="reply_uid" property="replyUid" jdbcType="INTEGER" />
+    <result column="comment_id" property="commentId" jdbcType="INTEGER" />
+    <result column="good_num" property="goodNum" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="commit_ip" property="commitIp" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wbyweb.bolg.po.UserComment" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+    <resultMap id="ResultLnikeMapBLOBs" type="com.wbyweb.bolg.po.UserComment" extends="ResultMapWithBLOBs" >
+        <association property="article" javaType="com.wbyweb.bolg.po.Article">
+            <id column="article_id" property="articleId"/>
+            <result column="article_name" property="articleName"/>
+        </association>
+    </resultMap>
+
+  <resultMap id="Blob_ResultLnikeMap" type="com.wbyweb.bolg.po.UserComment" extends="ResultMapWithBLOBs" >
+    <association property="user" javaType="com.wbyweb.bolg.po.User">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, article_id, pid, type, uid, status, created_at, updated_at, reply_uid, comment_id, 
+    good_num, level, commit_ip
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wbyweb.bolg.po.UserComment" >
+    insert into user_comment (id, article_id, pid, 
+      type, uid, status, 
+      created_at, updated_at, reply_uid, 
+      comment_id, good_num, level, 
+      commit_ip, content)
+    values (#{id,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{replyUid,jdbcType=INTEGER}, 
+      #{commentId,jdbcType=INTEGER}, #{goodNum,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{commitIp,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbyweb.bolg.po.UserComment" >
+    insert into user_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="replyUid != null" >
+        reply_uid,
+      </if>
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="goodNum != null" >
+        good_num,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="commitIp != null" >
+        commit_ip,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyUid != null" >
+        #{replyUid,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null" >
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodNum != null" >
+        #{goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="commitIp != null" >
+        #{commitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbyweb.bolg.po.UserComment" >
+    update user_comment
+    <set >
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyUid != null" >
+        reply_uid = #{replyUid,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null" >
+        comment_id = #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodNum != null" >
+        good_num = #{goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="commitIp != null" >
+        commit_ip = #{commitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wbyweb.bolg.po.UserComment" >
+    update user_comment
+    set article_id = #{articleId,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      reply_uid = #{replyUid,jdbcType=INTEGER},
+      comment_id = #{commentId,jdbcType=INTEGER},
+      good_num = #{goodNum,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      commit_ip = #{commitIp,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbyweb.bolg.po.UserComment" >
+    update user_comment
+    set article_id = #{articleId,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      reply_uid = #{replyUid,jdbcType=INTEGER},
+      comment_id = #{commentId,jdbcType=INTEGER},
+      good_num = #{goodNum,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      commit_ip = #{commitIp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="seartchUserCommentListByArticleId" resultMap="Blob_ResultLnikeMap" parameterType="java.util.Map" >
+      SELECT
+      <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+      ,u.user_id,u.user_name
+      FROM user_comment uc,`user` u
+      WHERE uc.uid=u.user_id
+      <if test="articleId!=null">
+          and article_id = #{articleId}
+      </if>
+      ORDER BY uc.created_at ASC
+
+  </select>
+
+
+    <select id="seartchUserCommentListByContent" resultMap="ResultLnikeMapBLOBs" parameterType="java.util.Map" >
+        SELECT
+          c.id,
+          c.`pid`,
+          c.`content`,
+          c.`created_at`,
+          a.`article_name`,
+          a.`article_id`
+        FROM
+          `user_comment` c
+          LEFT JOIN `article` a
+            ON c.`article_id` = a.`article_id`
+        <where>
+            <if test="content!=null">
+                and content like #{content}
+            </if>
+        </where>
+    </select>
+</mapper>

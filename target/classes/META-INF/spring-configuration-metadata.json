@@ -1,0 +1,17 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.wbyweb.bolg.controller.common.FileUploadController",
+      "name": "ftp",
+      "type": "com.wbyweb.bolg.controller.common.FileUploadController"
+    },
+    {
+      "sourceType": "com.wbyweb.bolg.config.DruidConfig",
+      "name": "spring.datasource",
+      "sourceMethod": "druid()",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": []
+}
